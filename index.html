@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Sperm Health - Bold Edition</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        body: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        neon: {
+                            pink: '#ff007f',
+                            cyan: '#00f2fe',
+                            green: '#00ff87',
+                            yellow: '#ffcf00',
+                            purple: '#a855f7'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'swim': 'swim 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                        'spin-slow': 'spin 8s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        swim: {
+                            '0%, 100%': { transform: 'rotate(-2deg) translateX(0)' },
+                            '50%': { transform: 'rotate(2deg) translateX(10px)' },
+                        },
+                        glow: {
+                            '0%': { filter: 'drop-shadow(0 0 10px rgba(0, 242, 254, 0.5))' },
+                            '100%': { filter: 'drop-shadow(0 0 25px rgba(0, 242, 254, 0.9))' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #030712;
+            background-image: 
+                radial-gradient(circle at 15% 10%, rgba(255, 0, 127, 0.08) 0%, transparent 40%), 
+                radial-gradient(circle at 85% 90%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 135, 0.03) 0%, transparent 50%);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            cursor: default;
+        }
+
+        /* Ambient Mouse Glow */
+        #mouse-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+            mix-blend-mode: screen;
+        }
+
+        /* Dark Glassmorphism */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .indicator-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s ease-out;
+        }
+
+        .indicator-content.open {
+            grid-template-rows: 1fr;
+        }
+
+        .indicator-content > div {
+            overflow: hidden;
+        }
+
+        /* SVG Tail Wiggle Animation */
+        .wiggle-tail {
+            animation: wiggle 2s ease-in-out infinite;
+            transform-origin: left center;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(-0.8); }
+        }
+        
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* 3D Flip Card Styles */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .group-hover\:rotate-y-180:hover .transform-style-3d { transform: rotateY(180deg); }
+        
+        /* Anatomy Tooltip Styles */
+        .anatomy-tooltip {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(15px) translateX(-50%);
+        }
+        .anatomy-tooltip.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) translateX(-50%);
+        }
+        .sperm-part {
+            transition: filter 0.3s ease;
+        }
+        .sperm-part:hover {
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.9));
+            cursor: pointer;
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #00f2fe;
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.8);
+            transition: transform 0.1s;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+        
+        /* Conic Gradient Pie Chart */
+        .pie-chart {
+            background: conic-gradient(
+                #ff007f 0deg, 
+                #ff007f 60deg, 
+                rgba(255,255,255,0.05) 60deg, 
+                rgba(255,255,255,0.05) 360deg
+            );
+            border-radius: 50%;
+        }
+
+        /* Quiz Option Selection */
+        .quiz-option.selected {
+            background-color: rgba(0, 242, 254, 0.2);
+            border-color: #00f2fe;
+        }
+        .quiz-option.correct {
+            background-color: rgba(0, 255, 135, 0.2);
+            border-color: #00ff87;
+        }
+        .quiz-option.incorrect {
+            background-color: rgba(255, 0, 127, 0.2);
+            border-color: #ff007f;
+        }
+
+        /* Markdown Styling for AI Assistant Answers */
+        .markdown-content p {
+            margin-bottom: 0.75rem;
+        }
+        .markdown-content ul {
+            list-style-type: disc;
+            padding-left: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .markdown-content li {
+            margin-bottom: 0.25rem;
+        }
+        .markdown-content h4 {
+            font-weight: bold;
+            color: #00f2fe;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .markdown-content h5 {
+            font-weight: bold;
+            color: #ffcf00;
+            margin-top: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        .markdown-content strong {
+            color: #ffffff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen relative overflow-x-hidden">
+
+    <!-- Ambient Mouse Glow -->
+    <div id="mouse-glow"></div>
+
+    <div class="blob bg-fuchsia-600 w-[500px] h-[500px] rounded-full -top-20 -left-20 animate-pulse-slow"></div>
+    <div class="blob bg-cyan-600 w-[400px] h-[400px] rounded-full top-1/2 -right-20 animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="blob bg-emerald-600 w-[600px] h-[600px] rounded-full bottom-0 -left-40 animate-pulse-slow" style="animation-delay: 4s;"></div>
+
+    <main class="max-w-6xl mx-auto px-4 py-12 relative z-10">
+        
+        <header class="text-center mb-20 relative">
+            <div class="inline-block mb-6 px-5 py-2 rounded-full bg-slate-800/80 text-cyan-400 border border-cyan-500/30 font-bold text-sm tracking-widest uppercase shadow-[0_0_15px_rgba(0,242,254,0.3)] backdrop-blur-md">
+                Interactive Medical Guide
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight drop-shadow-md">
+                Understanding <br class="md:hidden"/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-pink via-purple-500 to-neon-cyan animate-pulse-slow">Sperm Health</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 font-light mb-10 max-w-3xl mx-auto">
+                The <strong class="text-white font-bold">4 Key Indicators</strong> of Male Fertility
+            </p>
+
+            <!-- Did you know card -->
+            <div class="max-w-4xl mx-auto text-left glass-card rounded-3xl p-6 md:p-8 border-l-4 border-l-neon-pink relative overflow-hidden group">
+                <div class="absolute -right-10 -top-10 text-slate-800 opacity-40 group-hover:scale-110 group-hover:opacity-50 transition-all duration-500">
+                    <i class="fas fa-lightbulb text-9xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <i class="fas fa-info-circle text-neon-pink drop-shadow-[0_0_8px_rgba(255,0,127,0.8)] animate-bounce"></i> Did you know?
+                </h3>
+                <p class="text-slate-300 font-body leading-relaxed relative z-10 text-lg">
+                    According to the World Health Organization, male fertility can be affected by <strong class="text-neon-cyan">sperm count, movement, shape, and overall sperm quality</strong>. Lifestyle factors such as smoking, obesity, and excessive alcohol consumption may negatively impact sperm health.
+                </p>
+            </div>
+        </header>
+
+        <section class="mb-24">
+            <div class="text-center mb-10">
+                <p class="text-neon-yellow font-semibold tracking-wide uppercase text-sm animate-pulse">
+                    <i class="fas fa-hand-pointer mr-2"></i>Click indicators & hover over the anatomy below
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 items-center">
+                
+                <!-- Left Column -->
+                <div class="flex flex-col gap-6 order-2 md:order-1">
+                    
+                    <!-- 1. Sperm Count -->
+                    <div class="glass-card rounded-2xl p-6 cursor-pointer border-t-4 border-t-neon-pink hover:shadow-[0_10px_30px_rgba(255,0,127,0.2)] group" onclick="toggleCard('card-count')">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 rounded-xl bg-slate-800 border border-fuchsia-500/30 text-neon-pink flex items-center justify-center text-2xl shadow-inner group-hover:scale-110 transition-transform">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-white">1. Sperm Count</h2>
+                            <i class="fas fa-chevron-down ml-auto text-slate-500 transition-transform duration-300" id="icon-card-count"></i>
+                        </div>
+                        <div class="indicator-content" id="card-count">
+                            <div class="pt-2 font-body text-slate-300 space-y-4">
+                                <p class="text-sm bg-slate-800/50 p-3 rounded-lg"><strong class="text-white">What is it?</strong><br>The number of sperm present in semen.</p>
+                                <div class="bg-indigo-900/40 p-3 rounded-lg border border-indigo-500/30">
+                                    <p class="text-sm text-indigo-200"><strong class="text-neon-pink">WHO Benchmark:</strong> ≥ 15 million sperm per mL</p>
+                                </div>
+                                <div class="bg-emerald-900/30 p-3 rounded-lg border border-emerald-500/30 flex gap-3">
+                                    <span class="text-emerald-400">✅</span>
+                                    <p class="text-sm text-emerald-100">Higher count increases the likelihood of fertilization.</p>
+                                </div>
+                                <div class="bg-rose-900/30 p-3 rounded-lg border border-rose-500/30 flex gap-3">
+                                    <span class="text-rose-400">⚠️</span>
+                                    <p class="text-sm text-rose-100">Low count may reduce the chances of conception.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Morphology -->
+                    <div class="glass-card rounded-2xl p-6 cursor-pointer border-t-4 border-t-neon-green hover:shadow-[0_10px_30px_rgba(0,255,135,0.2)] group" onclick="toggleCard('card-morphology')">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 rounded-xl bg-slate-800 border border-emerald-500/30 text-neon-green flex items-center justify-center text-2xl shadow-inner group-hover:scale-110 transition-transform">
+                                <i class="fas fa-microscope"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-white">3. Morphology</h2>
+                            <i class="fas fa-chevron-down ml-auto text-slate-500 transition-transform duration-300" id="icon-card-morphology"></i>
+                        </div>
+                        <div class="indicator-content" id="card-morphology">
+                            <div class="pt-2 font-body text-slate-300 space-y-4">
+                                <p class="text-sm bg-slate-800/50 p-3 rounded-lg"><strong class="text-white">What is it?</strong><br>The size and shape of sperm cells.</p>
+                                <div class="bg-indigo-900/40 p-3 rounded-lg border border-indigo-500/30">
+                                    <p class="text-sm text-indigo-200"><strong class="text-neon-green">WHO Benchmark:</strong> ≥ 4% normally shaped</p>
+                                </div>
+                                <div class="bg-emerald-900/30 p-3 rounded-lg border border-emerald-500/30 flex gap-3">
+                                    <span class="text-emerald-400">✅</span>
+                                    <p class="text-sm text-emerald-100">Normally shaped sperm are more likely to fertilize an egg.</p>
+                                </div>
+                                <div class="bg-rose-900/30 p-3 rounded-lg border border-rose-500/30 flex gap-3">
+                                    <span class="text-rose-400">⚠️</span>
+                                    <p class="text-sm text-rose-100">Abnormal structures can affect fertility.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Center Column: Animated SVG Illustration -->
+                <div class="flex justify-center items-center order-1 md:order-2 py-12 md:py-0 relative group">
+                    <div class="absolute w-72 h-72 bg-neon-cyan rounded-full blur-[100px] opacity-20 z-0 group-hover:opacity-40 transition-opacity duration-700"></div>
+                    <div class="absolute w-40 h-40 bg-neon-pink rounded-full blur-[80px] opacity-10 z-0 mix-blend-screen group-hover:opacity-30 transition-opacity duration-700"></div>
+                    
+                    <div class="text-center absolute -top-8 left-1/2 -translate-x-1/2 w-full text-neon-yellow text-xs font-bold tracking-widest uppercase animate-pulse z-20 pointer-events-none drop-shadow-[0_0_5px_rgba(255,207,0,0.8)]">
+                        <i class="fas fa-hand-pointer mr-1"></i> Hover parts to explore anatomy
+                    </div>
+
+                    <svg viewBox="0 0 200 200" class="w-80 h-80 z-10 animate-swim animate-glow relative drop-shadow-[0_0_20px_rgba(0,242,254,0.4)]">
+                        <defs>
+                            <linearGradient id="spermGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#00f2fe" />
+                                <stop offset="100%" stop-color="#4facfe" />
+                            </linearGradient>
+                            <filter id="glowEffect" x="-30%" y="-30%" width="160%" height="160%">
+                                <feGaussianBlur stdDeviation="5" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+                        <g filter="url(#glowEffect)">
+                            <!-- Tail -->
+                            <path id="part-tail" class="wiggle-tail sperm-part" d="M 85 100 Q 130 80 160 110 T 210 100" fill="none" stroke="url(#spermGrad)" stroke-width="7" stroke-linecap="round" onmouseenter="showAnatomy('tail')" onmouseleave="hideAnatomy()"/>
+                            
+                            <!-- Midpiece -->
+                            <rect id="part-midpiece" class="sperm-part" x="78" y="96" width="14" height="8" rx="3" fill="#ffcf00" transform="rotate(-10 65 100)" onmouseenter="showAnatomy('midpiece')" onmouseleave="hideAnatomy()"/>
+
+                            <!-- Head -->
+                            <g id="part-head" class="sperm-part" onmouseenter="showAnatomy('head')" onmouseleave="hideAnatomy()">
+                                <ellipse cx="65" cy="100" rx="30" ry="19" fill="url(#spermGrad)" transform="rotate(-10 65 100)"/>
+                                <path d="M 38 100 A 25 15 0 0 1 70 85 Q 60 100 38 100 Z" fill="#ffffff" opacity="0.9" transform="rotate(-10 65 100)"/>
+                                <circle cx="72" cy="100" r="7" fill="#030712" opacity="0.6" transform="rotate(-10 65 100)"/>
+                            </g>
+                        </g>
+                    </svg>
+
+                    <!-- Interactive Tooltip -->
+                    <div id="anatomy-info" class="anatomy-tooltip absolute top-[85%] left-1/2 w-64 glass-card p-5 rounded-2xl z-30 border-l-4 border-neon-cyan text-left pointer-events-none shadow-[0_15px_40px_rgba(0,0,0,0.9)]">
+                        <h4 id="anatomy-title" class="text-neon-cyan font-bold text-lg mb-2">Anatomy</h4>
+                        <p id="anatomy-desc" class="text-slate-300 text-sm font-body leading-relaxed">Hover over the sperm cell to reveal its components.</p>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="flex flex-col gap-6 order-3">
+                    
+                    <!-- 2. Motility -->
+                    <div class="glass-card rounded-2xl p-6 cursor-pointer border-t-4 border-t-neon-cyan hover:shadow-[0_10px_30px_rgba(0,242,254,0.2)] group" onclick="toggleCard('card-motility')">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 rounded-xl bg-slate-800 border border-cyan-500/30 text-neon-cyan flex items-center justify-center text-2xl shadow-inner group-hover:scale-110 transition-transform">
+                                <i class="fas fa-person-swimming"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-white">2. Motility</h2>
+                            <i class="fas fa-chevron-down ml-auto text-slate-500 transition-transform duration-300" id="icon-card-motility"></i>
+                        </div>
+                        <div class="indicator-content" id="card-motility">
+                            <div class="pt-2 font-body text-slate-300 space-y-4">
+                                <p class="text-sm bg-slate-800/50 p-3 rounded-lg"><strong class="text-white">What is it?</strong><br>The ability of sperm to move efficiently.</p>
+                                <div class="bg-indigo-900/40 p-3 rounded-lg border border-indigo-500/30">
+                                    <p class="text-sm text-indigo-200"><strong class="text-neon-cyan">WHO Benchmark:</strong> ≥ 40% moving overall</p>
+                                </div>
+                                <div class="bg-emerald-900/30 p-3 rounded-lg border border-emerald-500/30 flex gap-3">
+                                    <span class="text-emerald-400">✅</span>
+                                    <p class="text-sm text-emerald-100">Healthy sperm must swim forward to reach the egg.</p>
+                                </div>
+                                <div class="bg-rose-900/30 p-3 rounded-lg border border-rose-500/30 flex gap-3">
+                                    <span class="text-rose-400">⚠️</span>
+                                    <p class="text-sm text-rose-100">Poor motility makes fertilization more difficult.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Volume -->
+                    <div class="glass-card rounded-2xl p-6 cursor-pointer border-t-4 border-t-neon-yellow hover:shadow-[0_10px_30px_rgba(255,207,0,0.15)] group" onclick="toggleCard('card-volume')">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 rounded-xl bg-slate-800 border border-yellow-500/30 text-neon-yellow flex items-center justify-center text-2xl shadow-inner group-hover:scale-110 transition-transform">
+                                <i class="fas fa-droplet"></i>
+                            </div>
+                            <h2 class="text-xl font-bold text-white">4. Semen Volume</h2>
+                            <i class="fas fa-chevron-down ml-auto text-slate-500 transition-transform duration-300" id="icon-card-volume"></i>
+                        </div>
+                        <div class="indicator-content" id="card-volume">
+                            <div class="pt-2 font-body text-slate-300 space-y-4">
+                                <p class="text-sm bg-slate-800/50 p-3 rounded-lg"><strong class="text-white">What is it?</strong><br>The amount of semen released.</p>
+                                <div class="bg-indigo-900/40 p-3 rounded-lg border border-indigo-500/30">
+                                    <p class="text-sm text-indigo-200"><strong class="text-neon-yellow">WHO Benchmark:</strong> ≥ 1.5 mL</p>
+                                </div>
+                                <div class="bg-emerald-900/30 p-3 rounded-lg border border-emerald-500/30 flex gap-3">
+                                    <span class="text-emerald-400">✅</span>
+                                    <p class="text-sm text-emerald-100">Adequate volume helps transport sperm safely.</p>
+                                </div>
+                                <div class="bg-rose-900/30 p-3 rounded-lg border border-rose-500/30 flex gap-3">
+                                    <span class="text-rose-400">⚠️</span>
+                                    <p class="text-sm text-rose-100">Low volume may indicate reproductive issues.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-24">
+            <div class="glass-card p-6 md:p-10 rounded-3xl border border-slate-700/50 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                <div class="text-center mb-8">
+                    <span class="text-4xl mb-3 block drop-shadow-[0_0_10px_rgba(0,242,254,0.5)]">🔬</span>
+                    <h2 class="text-3xl font-extrabold text-white">The Fertility Factor Simulator</h2>
+                    <p class="text-slate-400 mt-2 font-body max-w-2xl mx-auto">Adjust the lifestyle slider to see in real-time how diet, exercise, and habits physically affect sperm count and motility under a microscope.</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <!-- Controls -->
+                    <div class="w-full md:w-1/3 space-y-6">
+                        <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                            <label for="healthSlider" class="block text-white font-bold mb-4 flex justify-between">
+                                <span>Lifestyle Score</span>
+                                <span id="scoreDisplay" class="text-neon-cyan font-black">80%</span>
+                            </label>
+                            <input type="range" id="healthSlider" min="10" max="100" value="80">
+                            
+                            <div class="flex justify-between text-xs text-slate-400 mt-3 font-bold uppercase tracking-wider">
+                                <span class="text-rose-400">Poor Habits</span>
+                                <span class="text-emerald-400">Healthy Habits</span>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Stats Readout -->
+                        <div class="space-y-3 font-body text-sm">
+                            <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                                <span class="text-slate-300">Sperm Count:</span>
+                                <span id="simCount" class="font-bold text-neon-pink">High (Normal)</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                                <span class="text-slate-300">Motility (Speed):</span>
+                                <span id="simSpeed" class="font-bold text-neon-cyan">Fast & Directed</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                                <span class="text-slate-300">Morphology:</span>
+                                <span id="simMorph" class="font-bold text-neon-green">Healthy Shape</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Canvas -->
+                    <div class="w-full md:w-2/3 h-80 bg-[#0a0f1c] rounded-2xl border-2 border-slate-700 overflow-hidden relative shadow-[inset_0_0_50px_rgba(0,0,0,0.8)]">
+                        <div class="absolute inset-0 border-4 border-black/20 rounded-2xl pointer-events-none z-10"></div>
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIi8+Cjwvc3ZnPg==')] opacity-50 z-0"></div>
+                        <canvas id="spermCanvas" class="w-full h-full relative z-0"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW FEATURE: Expanded Gemini AI Suite Section -->
+        <section class="mb-24">
+            <div class="glass-card p-6 md:p-10 rounded-3xl border-2 border-neon-purple/40 shadow-[0_20px_50px_rgba(168,85,247,0.15)] relative overflow-hidden">
+                <div class="absolute -right-16 -top-16 w-48 h-48 bg-neon-purple/10 rounded-full blur-3xl"></div>
+                <div class="absolute -left-16 -bottom-16 w-48 h-48 bg-neon-cyan/10 rounded-full blur-3xl"></div>
+                
+                <div class="text-center mb-8 relative z-10">
+                    <span class="inline-block px-4 py-1 rounded-full bg-neon-purple/10 border border-neon-purple/30 text-neon-purple font-black text-xs uppercase tracking-widest mb-3">
+                        <i class="fa-solid fa-wand-magic-sparkles mr-1 animate-pulse"></i> Gemini AI Driven
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white">Smart Gemini AI Fertility Suite</h2>
+                    <p class="text-slate-300 mt-2 font-body max-w-2xl mx-auto">Access clinical-grade insight engines, medical analysis, and structured nutrition planning powered live by Gemini AI models.</p>
+                </div>
+
+                <!-- Tabs navigation headers -->
+                <div class="flex flex-wrap border-b border-slate-700/80 mb-6 gap-2">
+                    <button id="tabBtnChat" class="flex-1 min-w-[120px] py-3 text-center font-bold text-neon-cyan border-b-2 border-neon-cyan transition-all" onclick="switchSuiteTab('chat')">
+                        <i class="fa-solid fa-comments mr-2"></i>Ask AI Expert
+                    </button>
+                    <button id="tabBtnLab" class="flex-1 min-w-[120px] py-3 text-center font-bold text-slate-400 hover:text-white transition-all" onclick="switchSuiteTab('lab')">
+                        <i class="fa-solid fa-file-medical mr-2"></i>Lab Interpreter
+                    </button>
+                    <button id="tabBtnRecipe" class="flex-1 min-w-[120px] py-3 text-center font-bold text-slate-400 hover:text-white transition-all" onclick="switchSuiteTab('recipe')">
+                        <i class="fa-solid fa-utensils mr-2"></i>Recipe Planner
+                    </button>
+                </div>
+
+                <!-- TAB 1: AI Chat Assistant with Search Grounding -->
+                <div id="aiTabChat" class="space-y-6 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Suggestions -->
+                        <div class="bg-slate-900/50 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Suggested Questions</h4>
+                                <div class="space-y-2">
+                                    <button class="w-full text-left p-3 text-xs bg-slate-800/40 hover:bg-slate-800 rounded-xl border border-slate-700/50 text-slate-300 transition-all font-body flex items-start gap-2" onclick="setQuery('How exactly does heat from hot tubs or laptops affect sperm parameters?')">
+                                        <i class="fa-solid fa-temperature-arrow-up text-neon-pink mt-0.5 shrink-0"></i>
+                                        <span>How does heat from laptops affect sperm?</span>
+                                    </button>
+                                    <button class="w-full text-left p-3 text-xs bg-slate-800/40 hover:bg-slate-800 rounded-xl border border-slate-700/50 text-slate-300 transition-all font-body flex items-start gap-2" onclick="setQuery('Can you explain what Oligozoospermia is and how to address it naturally?')">
+                                        <i class="fa-solid fa-vial text-neon-cyan mt-0.5 shrink-0"></i>
+                                        <span>What is Oligozoospermia?</span>
+                                    </button>
+                                    <button class="w-full text-left p-3 text-xs bg-slate-800/40 hover:bg-slate-800 rounded-xl border border-slate-700/50 text-slate-300 transition-all font-body flex items-start gap-2" onclick="setQuery('Which antioxidant-rich foods provide the fastest boost to sperm morphology?')">
+                                        <i class="fa-solid fa-seedling text-neon-green mt-0.5 shrink-0"></i>
+                                        <span>Fastest diet tips for morphology?</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mt-6 pt-4 border-t border-slate-800 text-xxs text-slate-500 font-body flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-neon-green shrink-0"></i>
+                                <span>Answers are grounded in medical databases and peer-reviewed journals.</span>
+                            </div>
+                        </div>
+
+                        <!-- Chat workspace -->
+                        <div class="lg:col-span-2 flex flex-col justify-between bg-slate-955 border border-slate-800 rounded-2xl p-5 min-h-[350px]">
+                            <!-- Output log -->
+                            <div id="chatOutput" class="flex-1 overflow-y-auto pr-2 max-h-[300px] mb-4 space-y-4 font-body text-slate-300 leading-relaxed text-sm">
+                                <div class="bg-indigo-950/30 border border-indigo-500/20 p-4 rounded-2xl">
+                                    <p class="font-bold text-white mb-1"><i class="fa-solid fa-robot text-neon-cyan mr-1.5"></i> AI Medical Advisor:</p>
+                                    Hello! Ask me any medical or scientific question about male fertility, sperm parameters, lifestyle adjustments, or anatomical functions. I will research the latest data for you.
+                                </div>
+                            </div>
+
+                            <!-- Loader -->
+                            <div id="chatLoader" class="hidden text-center py-4 text-sm text-neon-purple flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-circle-notch animate-spin text-xl"></i>
+                                <span class="font-bold tracking-wide">Consulting medical knowledge engines...</span>
+                            </div>
+
+                            <!-- Citations box -->
+                            <div id="citationWrapper" class="hidden mb-3 p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs font-body">
+                                <span class="text-neon-yellow font-bold uppercase tracking-wider block mb-1">Grounded Reference Sources:</span>
+                                <div id="citationsList" class="flex flex-wrap gap-2 text-slate-400"></div>
+                            </div>
+
+                            <!-- Input zone -->
+                            <div class="flex gap-2">
+                                <input type="text" id="chatInput" placeholder="Type your fertility question..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-neon-cyan">
+                                <button onclick="sendAIQuery()" class="bg-gradient-to-r from-neon-cyan to-brand-600 text-slate-950 font-black px-6 rounded-xl text-sm tracking-wider uppercase hover:opacity-90 active:scale-95 transition-all">
+                                    Ask
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: AI Semen Lab Report Interpreter -->
+                <div id="aiTabLab" class="hidden space-y-6 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-white"><i class="fa-solid fa-vials text-neon-cyan mr-2"></i>Semen Analysis Metric Inputs</h3>
+                            <p class="text-slate-400 text-xs font-body">Input semen analysis measurements to get an instant clinical-grade layperson breakdown comparing your metrics with WHO standard reference values.</p>
+                            
+                            <!-- Slider Controls for Lab Metrics -->
+                            <div class="space-y-3 bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-300 font-bold">Sperm Count (million/mL)</span>
+                                        <span id="labCountVal" class="text-neon-pink font-bold">12 M/mL</span>
+                                    </div>
+                                    <input type="range" id="labCount" min="1" max="150" value="12" class="w-full" oninput="document.getElementById('labCountVal').textContent = this.value + ' M/mL'">
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-300 font-bold">Sperm Motility (%)</span>
+                                        <span id="labMotilityVal" class="text-neon-cyan font-bold">35%</span>
+                                    </div>
+                                    <input type="range" id="labMotility" min="1" max="100" value="35" class="w-full" oninput="document.getElementById('labMotilityVal').textContent = this.value + '%'">
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-300 font-bold">Normal Morphology (%)</span>
+                                        <span id="labMorphVal" class="text-neon-green font-bold">3%</span>
+                                    </div>
+                                    <input type="range" id="labMorph" min="1" max="50" value="3" class="w-full" oninput="document.getElementById('labMorphVal').textContent = this.value + '%'">
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-slate-300 font-bold">Semen Volume (mL)</span>
+                                        <span id="labVolumeVal" class="text-neon-yellow font-bold">1.2 mL</span>
+                                    </div>
+                                    <input type="range" id="labVolume" min="0.1" max="10.0" step="0.1" value="1.2" class="w-full" oninput="document.getElementById('labVolumeVal').textContent = this.value + ' mL'">
+                                </div>
+                            </div>
+
+                            <button onclick="analyzeLabReport()" class="w-full bg-gradient-to-r from-neon-cyan to-blue-500 hover:from-cyan-400 hover:to-blue-600 text-slate-950 font-black py-4 rounded-xl tracking-wider uppercase active:scale-98 transition-all shadow-[0_5px_15px_rgba(0,242,254,0.3)]">
+                                <i class="fa-solid fa-magnifying-glass-chart mr-2"></i>Analyze Lab Metrics
+                            </button>
+                        </div>
+
+                        <!-- Diagnosis workspace -->
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between min-h-[350px]">
+                            <div class="flex-1 overflow-y-auto pr-2 max-h-[350px]" id="labOutputContainer">
+                                <div id="labPlaceholder" class="text-center py-12">
+                                    <span class="text-5xl block mb-4 filter drop-shadow-[0_0_8px_rgba(0,242,254,0.5)]">📊</span>
+                                    <h4 class="text-white font-bold text-lg mb-2">No Report Analyzed Yet</h4>
+                                    <p class="text-slate-400 text-sm max-w-sm mx-auto font-body">Adjust the diagnostic sliders to match your lab metrics on the left, then click "Analyze Lab Metrics".</p>
+                                </div>
+                                <div id="labContent" class="hidden text-sm font-body text-slate-300 leading-relaxed markdown-content"></div>
+                            </div>
+
+                            <!-- Loader -->
+                            <div id="labLoader" class="hidden text-center py-12 text-sm text-neon-cyan flex flex-col items-center justify-center gap-3">
+                                <i class="fa-solid fa-spinner animate-spin text-4xl"></i>
+                                <span class="font-bold tracking-wider">Evaluating physiological markers against standard WHO guidelines...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: Nutri-Boost Structured Meal & Recipe Planner -->
+                <div id="aiTabRecipe" class="hidden space-y-6 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-white"><i class="fa-solid fa-pepper-hot text-neon-yellow mr-2"></i>Fertility Booster Recipe Planner</h3>
+                            <p class="text-slate-400 text-xs font-body">Select a target nutrition focus and input ingredients you have in your fridge to generate a premium structured meal plan packed with clinical sperm-boosting characteristics.</p>
+
+                            <div class="space-y-3 bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Target Nutrition Focus</label>
+                                    <select id="recipeFocus" class="w-full bg-slate-850 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-neon-yellow">
+                                        <option value="Zinc (Increases sperm density & volume)">Zinc (Beef, pumpkin seeds, oysters)</option>
+                                        <option value="Antioxidants (Combats oxidative stress & protects morphology)" selected>Antioxidants (Berries, leafy greens)</option>
+                                        <option value="Folate (Vital for DNA replication and reduction of abnormalities)">Folate (Spinach, asparagus)</option>
+                                        <option value="Omega-3 Fatty Acids (Crucial for sperm cell membrane structure)">Omega-3s (Salmon, walnuts, flaxseed)</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Available Ingredients (Optional)</label>
+                                    <input type="text" id="recipeIngredients" placeholder="Spinach, eggs, salmon, walnut..." class="w-full bg-slate-850 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-neon-yellow">
+                                </div>
+                            </div>
+
+                            <button onclick="generateRecipePlan()" class="w-full bg-gradient-to-r from-neon-yellow to-amber-500 hover:from-yellow-400 hover:to-amber-600 text-slate-950 font-black py-4 rounded-xl tracking-wider uppercase active:scale-98 transition-all shadow-[0_5px_15px_rgba(255,207,0,0.3)]">
+                                <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Synthesize Structured Recipe
+                            </button>
+                        </div>
+
+                        <!-- Structured output workspace -->
+                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between min-h-[350px]">
+                            <div class="flex-1 overflow-y-auto pr-2 max-h-[350px]" id="recipeOutputContainer">
+                                <div id="recipePlaceholder" class="text-center py-12">
+                                    <span class="text-5xl block mb-4 filter drop-shadow-[0_0_8px_rgba(255,207,0,0.5)]">🍳</span>
+                                    <h4 class="text-white font-bold text-lg mb-2">No Recipe Created</h4>
+                                    <p class="text-slate-400 text-sm max-w-sm mx-auto font-body">Select a focus nutrient and click "Synthesize Structured Recipe" to dynamically assemble custom culinary therapy.</p>
+                                </div>
+                                <div id="recipeContent" class="hidden">
+                                    <!-- Dynamic JSON elements render here -->
+                                </div>
+                            </div>
+
+                            <!-- Loader -->
+                            <div id="recipeLoader" class="hidden text-center py-12 text-sm text-neon-yellow flex flex-col items-center justify-center gap-3">
+                                <i class="fa-solid fa-clock animate-spin text-4xl"></i>
+                                <span class="font-bold tracking-wider">Compiling structured JSON nutrient maps...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mb-24">
+            <div class="text-center mb-10">
+                <span class="text-4xl mb-3 block drop-shadow-[0_0_10px_rgba(255,207,0,0.5)]">💊</span>
+                <h2 class="text-3xl font-extrabold text-white">Fueling Fertility: Key Nutrients</h2>
+                <p class="text-neon-yellow mt-3 max-w-2xl mx-auto font-body text-sm font-semibold tracking-widest uppercase animate-pulse">
+                    Hover cards to reveal food sources
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto perspective-1000">
+                
+                <!-- Zinc -->
+                <div class="relative h-48 group cursor-pointer">
+                    <div class="absolute inset-0 w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 w-full h-full glass-card p-6 rounded-2xl text-center border-b-4 border-neon-yellow flex flex-col justify-center backface-hidden">
+                            <div class="text-4xl mb-2">🥩</div>
+                            <h4 class="text-white font-bold mb-1 text-lg">Zinc</h4>
+                            <p class="text-xs text-slate-400 font-body">Crucial for volume & motility</p>
+                        </div>
+                        <div class="absolute inset-0 w-full h-full bg-slate-800 p-6 rounded-2xl text-center border border-neon-yellow flex flex-col justify-center items-center backface-hidden rotate-y-180 shadow-[0_0_20px_rgba(255,207,0,0.2)]">
+                            <h4 class="text-neon-yellow font-bold mb-2 text-sm uppercase tracking-wider">Top Sources</h4>
+                            <ul class="text-slate-200 text-sm font-body space-y-1">
+                                <li>🦪 Oysters</li>
+                                <li>🥩 Lean Beef</li>
+                                <li>🎃 Pumpkin Seeds</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Antioxidants -->
+                <div class="relative h-48 group cursor-pointer">
+                    <div class="absolute inset-0 w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 w-full h-full glass-card p-6 rounded-2xl text-center border-b-4 border-neon-pink flex flex-col justify-center backface-hidden">
+                            <div class="text-4xl mb-2">🍓</div>
+                            <h4 class="text-white font-bold mb-1 text-lg">Antioxidants</h4>
+                            <p class="text-xs text-slate-400 font-body">Protects from cellular damage</p>
+                        </div>
+                        <div class="absolute inset-0 w-full h-full bg-slate-800 p-6 rounded-2xl text-center border border-neon-pink flex flex-col justify-center items-center backface-hidden rotate-y-180 shadow-[0_0_20px_rgba(255,0,127,0.2)]">
+                            <h4 class="text-neon-pink font-bold mb-2 text-sm uppercase tracking-wider">Top Sources</h4>
+                            <ul class="text-slate-200 text-sm font-body space-y-1">
+                                <li>🫐 Berries</li>
+                                <li>🍊 Citrus Fruits</li>
+                                <li>🌰 Walnuts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Folate -->
+                <div class="relative h-48 group cursor-pointer">
+                    <div class="absolute inset-0 w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 w-full h-full glass-card p-6 rounded-2xl text-center border-b-4 border-neon-green flex flex-col justify-center backface-hidden">
+                            <div class="text-4xl mb-2">🥬</div>
+                            <h4 class="text-white font-bold mb-1 text-lg">Folate</h4>
+                            <p class="text-xs text-slate-400 font-body">Supports healthy DNA</p>
+                        </div>
+                        <div class="absolute inset-0 w-full h-full bg-slate-800 p-6 rounded-2xl text-center border border-neon-green flex flex-col justify-center items-center backface-hidden rotate-y-180 shadow-[0_0_20px_rgba(0,255,135,0.2)]">
+                            <h4 class="text-neon-green font-bold mb-2 text-sm uppercase tracking-wider">Top Sources</h4>
+                            <ul class="text-slate-200 text-sm font-body space-y-1">
+                                <li>🥬 Spinach</li>
+                                <li>🥦 Broccoli</li>
+                                <li>🥑 Avocados</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Omega-3s -->
+                <div class="relative h-48 group cursor-pointer">
+                    <div class="absolute inset-0 w-full h-full transition-transform duration-500 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 w-full h-full glass-card p-6 rounded-2xl text-center border-b-4 border-neon-cyan flex flex-col justify-center backface-hidden">
+                            <div class="text-4xl mb-2">🐟</div>
+                            <h4 class="text-white font-bold mb-1 text-lg">Omega-3s</h4>
+                            <p class="text-xs text-slate-400 font-body">Improves morphology</p>
+                        </div>
+                        <div class="absolute inset-0 w-full h-full bg-slate-800 p-6 rounded-2xl text-center border border-neon-cyan flex flex-col justify-center items-center backface-hidden rotate-y-180 shadow-[0_0_20px_rgba(0,242,254,0.2)]">
+                            <h4 class="text-neon-cyan font-bold mb-2 text-sm uppercase tracking-wider">Top Sources</h4>
+                            <ul class="text-slate-200 text-sm font-body space-y-1">
+                                <li>🐟 Salmon</li>
+                                <li>🌱 Chia Seeds</li>
+                                <li>🥚 Fortified Eggs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mb-24">
+            <div class="text-center mb-12">
+                <span class="text-4xl mb-4 block drop-shadow-[0_0_15px_rgba(0,242,254,0.5)]">🎭</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white">Myth vs. Fact</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto perspective-1000">
+                <!-- Card 1 -->
+                <div class="relative h-72 group cursor-pointer">
+                    <div class="absolute inset-0 w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 w-full h-full glass-card rounded-3xl p-8 flex flex-col justify-center items-center text-center backface-hidden border border-rose-500/30">
+                            <div class="w-16 h-16 rounded-full bg-rose-900/50 flex items-center justify-center text-rose-500 text-2xl mb-4 border border-rose-500/50"><i class="fas fa-times"></i></div>
+                            <span class="text-rose-500 font-bold tracking-widest uppercase text-xs mb-2">Myth</span>
+                            <h3 class="text-xl text-white font-semibold">"Infertility is usually a woman's problem."</h3>
+                        </div>
+                        <div class="absolute inset-0 w-full h-full bg-slate-800/90 backdrop-blur-md rounded-3xl p-8 flex flex-col justify-center items-center text-center backface-hidden rotate-y-180 border-2 border-emerald-500 shadow-[0_0_30px_rgba(52,211,153,0.2)]">
+                            <div class="w-16 h-16 rounded-full bg-emerald-900/50 flex items-center justify-center text-emerald-400 text-2xl mb-4 border border-emerald-500/50"><i class="fas fa-check"></i></div>
+                            <span class="text-emerald-400 font-bold tracking-widest uppercase text-xs mb-2">Fact</span>
+                            <p class="text-slate-200 font-body leading-relaxed">Male factors contribute to approximately <strong class="text-white bg-emerald-500/20 px-2 py-1 rounded">50%</strong> of all infertility cases globally.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="relative h-72 group cursor-pointer">
+                    <div class="absolute inset-0 w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 w-full h-full glass-card rounded-3xl p-8 flex flex-col justify-center items-center text-center backface-hidden border border-rose-500/30">
+                            <div class="w-16 h-16 rounded-full bg-rose-900/50 flex items-center justify-center text-rose-500 text-2xl mb-4 border border-rose-500/50"><i class="fas fa-fire"></i></div>
+                            <span class="text-rose-500 font-bold tracking-widest uppercase text-xs mb-2">Myth</span>
+                            <h3 class="text-xl text-white font-semibold">"Heat doesn't affect sperm."</h3>
+                        </div>
+                        <div class="absolute inset-0 w-full h-full bg-slate-800/90 backdrop-blur-md rounded-3xl p-8 flex flex-col justify-center items-center text-center backface-hidden rotate-y-180 border-2 border-emerald-500 shadow-[0_0_30px_rgba(52,211,153,0.2)]">
+                            <div class="w-16 h-16 rounded-full bg-emerald-900/50 flex items-center justify-center text-emerald-400 text-2xl mb-4 border border-emerald-500/50"><i class="fas fa-temperature-arrow-down"></i></div>
+                            <span class="text-emerald-400 font-bold tracking-widest uppercase text-xs mb-2">Fact</span>
+                            <p class="text-slate-200 font-body leading-relaxed">Testicles need to be cooler than body temp. Hot tubs, saunas, and laptops on laps can severely reduce production.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="relative h-72 group cursor-pointer">
+                    <div class="absolute inset-0 w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 w-full h-full glass-card rounded-3xl p-8 flex flex-col justify-center items-center text-center backface-hidden border border-rose-500/30">
+                            <div class="w-16 h-16 rounded-full bg-rose-900/50 flex items-center justify-center text-rose-500 text-2xl mb-4 border border-rose-500/50"><i class="fas fa-hourglass-half"></i></div>
+                            <span class="text-rose-500 font-bold tracking-widest uppercase text-xs mb-2">Myth</span>
+                            <h3 class="text-xl text-white font-semibold">"Age only affects female fertility."</h3>
+                        </div>
+                        <div class="absolute inset-0 w-full h-full bg-slate-800/90 backdrop-blur-md rounded-3xl p-8 flex flex-col justify-center items-center text-center backface-hidden rotate-y-180 border-2 border-emerald-500 shadow-[0_0_30px_rgba(52,211,153,0.2)]">
+                            <div class="w-16 h-16 rounded-full bg-emerald-900/50 flex items-center justify-center text-emerald-400 text-2xl mb-4 border border-emerald-500/50"><i class="fas fa-chart-line"></i></div>
+                            <span class="text-emerald-400 font-bold tracking-widest uppercase text-xs mb-2">Fact</span>
+                            <p class="text-slate-200 font-body leading-relaxed">While men produce sperm their whole lives, sperm quality, count, and motility decline significantly after age 40.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lifestyle Section -->
+        <section class="mb-20">
+            <div class="text-center mb-12">
+                <span class="text-5xl mb-4 block drop-shadow-[0_0_15px_rgba(0,255,135,0.4)]">🌱</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white">How to Maintain Healthy Sperm</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="glass-card rounded-3xl p-8 md:p-10 border-t-4 border-t-emerald-400 h-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+                    <h3 class="text-2xl font-bold text-emerald-400 mb-8 flex items-center gap-3">
+                        <i class="fas fa-check-circle drop-shadow-[0_0_10px_rgba(52,211,153,0.8)]"></i> Healthy Habits
+                    </h3>
+                    <ul class="space-y-5 font-body text-slate-200">
+                        <li class="flex items-center gap-4 hover:translate-x-2 transition-transform">
+                            <span class="bg-emerald-900/50 border border-emerald-500/30 text-emerald-400 rounded-full w-8 h-8 flex items-center justify-center shrink-0"><i class="fas fa-check"></i></span>
+                            <span class="text-lg">Eat a balanced diet rich in fruits & vegetables</span>
+                        </li>
+                        <li class="flex items-center gap-4 hover:translate-x-2 transition-transform">
+                            <span class="bg-emerald-900/50 border border-emerald-500/30 text-emerald-400 rounded-full w-8 h-8 flex items-center justify-center shrink-0"><i class="fas fa-check"></i></span>
+                            <span class="text-lg">Exercise regularly & maintain healthy body weight</span>
+                        </li>
+                        <li class="flex items-center gap-4 hover:translate-x-2 transition-transform">
+                            <span class="bg-emerald-900/50 border border-emerald-500/30 text-emerald-400 rounded-full w-8 h-8 flex items-center justify-center shrink-0"><i class="fas fa-check"></i></span>
+                            <span class="text-lg">Get 7–9 hours of sleep & manage stress effectively</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 md:p-10 border-t-4 border-t-rose-500 h-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl"></div>
+                    <h3 class="text-2xl font-bold text-rose-400 mb-8 flex items-center gap-3">
+                        <i class="fas fa-times-circle drop-shadow-[0_0_10px_rgba(244,63,94,0.8)]"></i> Things to Avoid
+                    </h3>
+                    <ul class="space-y-5 font-body text-slate-200">
+                        <li class="flex items-center gap-4 hover:translate-x-2 transition-transform">
+                            <span class="bg-rose-900/50 border border-rose-500/30 text-rose-400 rounded-full w-8 h-8 flex items-center justify-center shrink-0"><i class="fas fa-times"></i></span>
+                            <span class="text-lg">Avoid smoking & limit alcohol intake</span>
+                        </li>
+                        <li class="flex items-center gap-4 hover:translate-x-2 transition-transform">
+                            <span class="bg-rose-900/50 border border-rose-500/30 text-rose-400 rounded-full w-8 h-8 flex items-center justify-center shrink-0"><i class="fas fa-times"></i></span>
+                            <span class="text-lg">Avoid anabolic steroids & recreational drugs</span>
+                        </li>
+                        <li class="flex items-center gap-4 hover:translate-x-2 transition-transform">
+                            <span class="bg-rose-900/50 border border-rose-500/30 text-rose-400 rounded-full w-8 h-8 flex items-center justify-center shrink-0"><i class="fas fa-times"></i></span>
+                            <span class="text-lg">Reduce prolonged exposure to excessive heat</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Quick Fact -->
+        <section class="mb-24 max-w-4xl mx-auto">
+            <div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-8 md:p-10 text-white shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-slate-700 relative overflow-hidden group">
+                <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                    <!-- Visual Pie Chart representation of 1 in 6 -->
+                    <div class="relative w-32 h-32 shrink-0">
+                        <div class="absolute inset-0 pie-chart shadow-[0_0_30px_rgba(255,0,127,0.3)] animate-spin-slow"></div>
+                        <div class="absolute inset-3 bg-slate-900 rounded-full flex flex-col items-center justify-center border border-slate-700">
+                            <span class="text-3xl font-black text-neon-pink">1<span class="text-xl text-slate-500">/</span>6</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-neon-cyan mb-3 tracking-widest uppercase text-sm flex items-center gap-2">
+                            <i class="fas fa-chart-pie"></i> Quick Fact
+                        </h3>
+                        <p class="text-xl font-light leading-relaxed">
+                            Approximately <strong class="text-white font-bold border-b-2 border-neon-pink">1 in 6 people</strong> worldwide experience infertility during their reproductive years, and male factors contribute to around 50% of these cases.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Quiz Section -->
+        <section class="mb-16 max-w-3xl mx-auto">
+            <div class="glass-card rounded-3xl p-8 border-t-4 border-neon-cyan" id="quiz-container">
+                <div class="text-center mb-8">
+                    <span class="text-3xl mb-2 block">🧠</span>
+                    <h2 class="text-2xl font-bold text-white">Test Your Knowledge</h2>
+                </div>
+                
+                <div id="quiz-question-area" class="space-y-4">
+                    <h3 class="text-xl text-slate-200 font-body mb-6" id="question-text">1. Which of these defines "Sperm Motility"?</h3>
+                    <div class="space-y-3" id="options-container">
+                        <!-- Options generated by JS -->
+                    </div>
+                </div>
+
+                <div id="quiz-result-area" class="hidden text-center py-6">
+                    <div class="text-6xl mb-4" id="result-icon">🏆</div>
+                    <h3 class="text-2xl font-bold text-white mb-2" id="result-title">Great Job!</h3>
+                    <p class="text-slate-300 font-body" id="result-desc">You scored 3/3.</p>
+                    <button onclick="resetQuiz()" class="mt-6 px-6 py-2 bg-neon-cyan/20 text-neon-cyan border border-neon-cyan rounded-full hover:bg-neon-cyan hover:text-slate-900 font-bold transition-colors">Retake Quiz</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t border-slate-800 pt-8 mt-12 text-sm text-slate-400 font-body max-w-4xl mx-auto">
+            <h4 class="font-bold text-slate-300 mb-5 uppercase tracking-wider flex items-center gap-2">
+                <i class="fas fa-book text-neon-cyan"></i> References & Sources
+            </h4>
+            <ol class="list-decimal list-inside space-y-3 bg-slate-900/50 p-6 rounded-2xl border border-slate-800">
+                <li class="hover:text-slate-200 transition-colors">Azman, M. A. M. (2026). <em class="text-slate-300">Personal interview.</em></li>
+                <li class="hover:text-slate-200 transition-colors">Dhok et al. (2024). <em class="text-slate-300">Cureus.</em></li>
+                <li class="hover:text-slate-200 transition-colors">Sunder & Leslie (2022). <em class="text-slate-300">StatPearls.</em></li>
+                <li class="hover:text-slate-200 transition-colors">World Health Organization (2025). <em class="text-slate-300">Infertility.</em></li>
+            </ol>
+            <p class="mt-8 text-center text-xs opacity-40">
+                Created for educational purposes. Always consult a healthcare professional for medical advice.
+            </p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- 1. Basic Interactivity (Accordions & Tooltips) ---
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.innerWidth > 768) toggleCard('card-count');
+            initCanvas(); // Start simulator
+            loadQuiz();   // Load quiz
+        });
+
+        function toggleCard(cardId) {
+            const content = document.getElementById(cardId);
+            const icon = document.getElementById('icon-' + cardId);
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+                icon.classList.remove('text-white');
+                icon.classList.add('text-slate-500');
+            } else {
+                content.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
+                icon.classList.remove('text-slate-500');
+                icon.classList.add('text-white');
+            }
+        }
+
+        const anatomyData = {
+            head: { title: "Head & Acrosome", desc: "Contains genetic material (DNA) and enzymes to penetrate the egg.", color: "text-neon-pink", border: "border-neon-pink" },
+            midpiece: { title: "Midpiece (The Engine)", desc: "Packed with mitochondria, providing energy to swim.", color: "text-neon-yellow", border: "border-neon-yellow" },
+            tail: { title: "Tail (Flagellum)", desc: "Whips back and forth to propel sperm forward.", color: "text-neon-cyan", border: "border-neon-cyan" }
+        };
+
+        function showAnatomy(part) {
+            const tooltip = document.getElementById('anatomy-info');
+            const data = anatomyData[part];
+            document.getElementById('anatomy-title').textContent = data.title;
+            document.getElementById('anatomy-title').className = `font-bold text-xl mb-2 ${data.color}`;
+            document.getElementById('anatomy-desc').textContent = data.desc;
+            tooltip.className = `anatomy-tooltip active absolute top-[85%] left-1/2 w-72 glass-card p-5 rounded-2xl z-30 border-l-4 text-left pointer-events-none shadow-[0_15px_40px_rgba(0,0,0,0.9)] ${data.border}`;
+        }
+
+        function hideAnatomy() {
+            document.getElementById('anatomy-info').classList.remove('active');
+        }
+
+        // --- 2. Ambient Mouse Glow ---
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.getElementById('mouse-glow');
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // --- STREAMING_CHUNK: Canvas animation engine and physics... ---
+        // --- 3. Interactive Sperm Canvas Simulator ---
+        const canvas = document.getElementById('spermCanvas');
+        const ctx = canvas.getContext('2d');
+        const slider = document.getElementById('healthSlider');
+        let spermParticles = [];
+        let animationFrameId;
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+
+        class SpermCell {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.angle = Math.random() * Math.PI * 2;
+                this.wiggleOffset = Math.random() * 100;
+                this.baseSpeed = Math.random() * 0.5 + 0.2;
+            }
+
+            draw(healthScore) {
+                // Calculate behavior based on health score (10 to 100)
+                const isHealthy = healthScore > 50;
+                const speedMult = healthScore / 50;
+                const speed = isHealthy ? this.baseSpeed * speedMult : this.baseSpeed * 0.3;
+                
+                // Movement
+                if (healthScore > 70) {
+                    this.angle += (Math.random() - 0.5) * 0.1;
+                } else {
+                    this.angle += (Math.random() - 0.4) * 0.4;
+                }
+
+                this.x += Math.cos(this.angle) * speed * 3;
+                this.y += Math.sin(this.angle) * speed * 3;
+
+                // Screen wrap
+                if(this.x < -20) this.x = canvas.width + 20;
+                if(this.x > canvas.width + 20) this.x = -20;
+                if(this.y < -20) this.y = canvas.height + 20;
+                if(this.y > canvas.height + 20) this.y = -20;
+
+                const time = Date.now() * 0.01;
+                const wiggle = Math.sin(time + this.wiggleOffset) * (isHealthy ? 4 : 1);
+
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+
+                ctx.fillStyle = healthScore > 40 ? '#00f2fe' : '#64748b';
+                ctx.strokeStyle = healthScore > 40 ? 'rgba(0, 242, 254, 0.6)' : 'rgba(100, 116, 139, 0.6)';
+                
+                // Draw Tail
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.quadraticCurveTo(-10, wiggle, -20, 0);
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Draw Head
+                ctx.beginPath();
+                if (healthScore < 30 && Math.random() > 0.5) {
+                    ctx.arc(2, 0, 2, 0, Math.PI * 2);
+                } else {
+                    ctx.ellipse(3, 0, 4, 2.5, 0, 0, Math.PI * 2);
+                }
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        function initCanvas() {
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            for(let i=0; i<80; i++) spermParticles.push(new SpermCell());
+            animateCanvas();
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const score = parseInt(slider.value);
+            const targetCount = Math.floor((score / 100) * 80);
+            
+            for (let i = 0; i < spermParticles.length; i++) {
+                if (i < targetCount || score < 30) {
+                    if (i >= targetCount) {
+                        ctx.globalAlpha = 0.3;
+                        spermParticles[i].draw(20); 
+                        ctx.globalAlpha = 1.0;
+                    } else {
+                        spermParticles[i].draw(score);
+                    }
+                }
+            }
+            animationFrameId = requestAnimationFrame(animateCanvas);
+        }
+
+        slider.addEventListener('input', (e) => {
+            const score = e.target.value;
+            document.getElementById('scoreDisplay').textContent = score + '%';
+            
+            const countEl = document.getElementById('simCount');
+            const speedEl = document.getElementById('simSpeed');
+            const morphEl = document.getElementById('simMorph');
+
+            if (score >= 70) {
+                countEl.textContent = "High (Normal)"; countEl.className = "font-bold text-neon-pink";
+                speedEl.textContent = "Fast & Directed"; speedEl.className = "font-bold text-neon-cyan";
+                morphEl.textContent = "Healthy Shape"; morphEl.className = "font-bold text-neon-green";
+                document.getElementById('scoreDisplay').style.color = '#00f2fe';
+            } else if (score >= 40) {
+                countEl.textContent = "Moderate"; countEl.className = "font-bold text-neon-yellow";
+                speedEl.textContent = "Sluggish"; speedEl.className = "font-bold text-neon-yellow";
+                morphEl.textContent = "Mixed Quality"; morphEl.className = "font-bold text-neon-yellow";
+                document.getElementById('scoreDisplay').style.color = '#ffcf00';
+            } else {
+                countEl.textContent = "Low (Oligozoospermia)"; countEl.className = "font-bold text-rose-500";
+                speedEl.textContent = "Poor (Asthenozoospermia)"; speedEl.className = "font-bold text-rose-500";
+                morphEl.textContent = "Abnormalities Present"; morphEl.className = "font-bold text-rose-500";
+                document.getElementById('scoreDisplay').style.color = '#f43f5e';
+            }
+        });
+
+        // --- STREAMING_CHUNK: Implementing the quiz and tab mechanics... ---
+        // --- 4. Interactive Quiz Logic ---
+        const quizData = [
+            {
+                q: "Which of these defines 'Sperm Motility'?",
+                options: ["The number of sperm in semen", "The ability of sperm to swim efficiently", "The shape and size of the sperm cell"],
+                answer: 1
+            },
+            {
+                q: "Which nutrient is highly crucial for improving sperm volume?",
+                options: ["Zinc", "Vitamin D", "Calcium"],
+                answer: 0
+            },
+            {
+                q: "True or False: Using hot tubs frequently can lower sperm count.",
+                options: ["True", "False"],
+                answer: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            const qData = quizData[currentQuestion];
+            document.getElementById('question-text').textContent = `${currentQuestion + 1}. ${qData.q}`;
+            const optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
+            
+            qData.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = "quiz-option w-full text-left p-4 rounded-xl bg-slate-800/50 border border-slate-700 text-slate-200 hover:bg-slate-700 transition-colors font-body";
+                btn.textContent = opt;
+                btn.onclick = () => handleAnswer(index, btn);
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(selectedIndex, btnElement) {
+            const correctIndex = quizData[currentQuestion].answer;
+            const buttons = document.querySelectorAll('.quiz-option');
+            
+            buttons.forEach(b => b.onclick = null);
+
+            if (selectedIndex === correctIndex) {
+                btnElement.classList.add('correct');
+                score++;
+            } else {
+                btnElement.classList.add('incorrect');
+                buttons[correctIndex].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < quizData.length) {
+                    loadQuiz();
+                } else {
+                    showResults();
+                }
+            }, 1200);
+        }
+
+        function showResults() {
+            document.getElementById('quiz-question-area').classList.add('hidden');
+            const resArea = document.getElementById('quiz-result-area');
+            resArea.classList.remove('hidden');
+            
+            document.getElementById('result-desc').textContent = `You scored ${score} out of ${quizData.length}.`;
+            if(score === quizData.length) {
+                document.getElementById('result-icon').textContent = "🏆";
+                document.getElementById('result-title').textContent = "Fertility Expert!";
+                document.getElementById('result-title').className = "text-2xl font-bold text-neon-green mb-2";
+            } else {
+                document.getElementById('result-icon').textContent = "📚";
+                document.getElementById('result-title').textContent = "Good Effort!";
+                document.getElementById('result-title').className = "text-2xl font-bold text-neon-yellow mb-2";
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quiz-result-area').classList.add('hidden');
+            document.getElementById('quiz-question-area').classList.remove('hidden');
+            loadQuiz();
+        }
+
+        // --- 5. Gemini AI Suite Implementation & Features ---
+        // Tab switcher for Suite Options
+        function switchSuiteTab(target) {
+            const tabs = ['chat', 'lab', 'recipe'];
+            tabs.forEach(tab => {
+                const btn = document.getElementById(`tabBtn${capitalize(tab)}`);
+                const content = document.getElementById(`aiTab${capitalize(tab)}`);
+                if (tab === target) {
+                    btn.className = `flex-1 min-w-[120px] py-3 text-center font-bold text-neon-${tab === 'recipe' ? 'yellow' : tab === 'lab' ? 'cyan' : 'cyan'} border-b-2 border-neon-${tab === 'recipe' ? 'yellow' : tab === 'lab' ? 'cyan' : 'cyan'} transition-all`;
+                    content.classList.remove('hidden');
+                } else {
+                    btn.className = "flex-1 min-w-[120px] py-3 text-center font-bold text-slate-400 hover:text-white transition-all";
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function setQuery(text) {
+            document.getElementById('chatInput').value = text;
+        }
+
+        // Exponential backoff fetcher
+        async function fetchWithBackoff(url, options, retries = 3, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    if (response.status === 429 && retries > 0) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response;
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                }
+                throw error;
+            }
+        }
+
+        // Custom Basic Markdown Renderer
+        function renderBasicMarkdown(text) {
+            let html = text;
+            html = html.replace(/\*\*(.*?)\*\//g, '<strong>$1</strong>');
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/^\s*\*\s+(.*)$/gim, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+            html = html.replace(/^\s*#### (.*)$/gim, '<h4>$1</h4>');
+            html = html.replace(/^\s*### (.*)$/gim, '<h4>$1</h4>');
+            html = html.replace(/^\s*## (.*)$/gim, '<h4>$1</h4>');
+            html = html.replace(/\n\n/g, '</p><p>');
+            html = html.replace(/\n/g, '<br>');
+            return `<p>${html}</p>`;
+        }
+
+        // --- STREAMING_CHUNK: Developing the Gemini API search-grounded chatbot... ---
+        // Ask Gemini AI Expert
+        async function sendAIQuery() {
+            const inputVal = document.getElementById('chatInput').value.trim();
+            if (!inputVal) return;
+
+            const outputEl = document.getElementById('chatOutput');
+            const loaderEl = document.getElementById('chatLoader');
+            const citationWrap = document.getElementById('citationWrapper');
+            const citationsList = document.getElementById('citationsList');
+
+            outputEl.innerHTML += `
+                <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700/50 text-right">
+                    <p class="font-bold text-neon-cyan mb-1"><i class="fa-solid fa-user mr-1.5"></i> You:</p>
+                    <p>${inputVal}</p>
+                </div>
+            `;
+            outputEl.scrollTop = outputEl.scrollHeight;
+            document.getElementById('chatInput').value = '';
+
+            loaderEl.classList.remove('hidden');
+            citationWrap.classList.add('hidden');
+
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+            const systemPrompt = "You are a professional male reproductive specialist and fertility advisor. Provide highly scientific, accurate, encouraging, and clear guidance regarding male fertility, sperm parameters (Count, Motility, Morphology, Semen Volume), nutritional components, and relevant studies. Ensure you refer to WHO benchmark standards (Count >= 15m, Motility >= 40%, Morphology >= 4%, Volume >= 1.5mL) when appropriate.";
+
+            const payload = {
+                contents: [{ parts: [{ text: inputVal }] }],
+                tools: [{ "google_search": {} }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    const text = candidate.content.parts[0].text;
+                    const formattedText = renderBasicMarkdown(text);
+
+                    outputEl.innerHTML += `
+                        <div class="bg-indigo-950/20 border border-indigo-500/20 p-4 rounded-2xl markdown-content">
+                            <p class="font-bold text-white mb-1"><i class="fa-solid fa-robot text-neon-purple mr-1.5"></i> AI Medical Advisor:</p>
+                            ${formattedText}
+                        </div>
+                    `;
+
+                    // Extract Grounding sources if available
+                    let sources = [];
+                    const groundingMetadata = candidate.groundingMetadata;
+                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                        sources = groundingMetadata.groundingAttributions
+                            .map(attribution => ({
+                                uri: attribution.web?.uri,
+                                title: attribution.web?.title,
+                            }))
+                            .filter(source => source.uri && source.title);
+                    }
+
+                    if (sources.length > 0) {
+                        citationsList.innerHTML = '';
+                        sources.forEach(src => {
+                            const link = document.createElement('a');
+                            link.href = src.uri;
+                            link.target = '_blank';
+                            link.className = "bg-slate-800 border border-slate-700 hover:bg-slate-700 px-2 py-1 rounded text-neon-cyan hover:underline text-xxs transition-all truncate max-w-[200px]";
+                            link.textContent = src.title;
+                            citationsList.appendChild(link);
+                        });
+                        citationWrap.classList.remove('hidden');
+                    }
+                } else {
+                    throw new Error("Invalid payload structure received.");
+                }
+            } catch (error) {
+                console.error(error);
+                outputEl.innerHTML += `
+                    <div class="bg-rose-950/20 border border-rose-500/30 p-4 rounded-2xl text-rose-300">
+                        <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> An error occurred while consulting our medical engines. Please try again.
+                    </div>
+                `;
+            } finally {
+                loaderEl.classList.add('hidden');
+                outputEl.scrollTop = outputEl.scrollHeight;
+            }
+        }
+
+        // --- STREAMING_CHUNK: Developing the Gemini API structured Semen Lab Report Interpreter... ---
+        // Lab Report Metric Interpreter
+        async function analyzeLabReport() {
+            const count = document.getElementById('labCount').value;
+            const motility = document.getElementById('labMotility').value;
+            const morphology = document.getElementById('labMorph').value;
+            const volume = document.getElementById('labVolume').value;
+
+            const placeholder = document.getElementById('labPlaceholder');
+            const loader = document.getElementById('labLoader');
+            const contentBox = document.getElementById('labContent');
+
+            placeholder.classList.add('hidden');
+            contentBox.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            const promptText = `Analyze this Semen Analysis Report:
+            - Sperm Count: ${count} million/mL (WHO Benchmark: >= 15 million/mL)
+            - Sperm Motility: ${motility}% (WHO Benchmark: >= 40%)
+            - Normal Morphology: ${morphology}% (WHO Benchmark: >= 4%)
+            - Semen Volume: ${volume} mL (WHO Benchmark: >= 1.5 mL)
+            
+            Classify any abnormalities found (e.g., Oligozoospermia, Asthenozoospermia, Teratozoospermia, or Hypospermia). Provide a friendly layperson translation of what these metrics mean physically, and list 3 scientifically supported actions to help normalize any abnormal values.`;
+
+            const systemPrompt = "You are a professional laboratory geneticist and semen analysis interpreter. Use structured, reassuring, and highly accurate scientific classifications to explain parameters clearly to laypersons.";
+
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: promptText }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    contentBox.innerHTML = renderBasicMarkdown(text);
+                    contentBox.classList.remove('hidden');
+                } else {
+                    throw new Error("No payload parsed successfully.");
+                }
+            } catch (error) {
+                console.error(error);
+                contentBox.innerHTML = `
+                    <div class="bg-rose-950/20 border border-rose-500/30 p-4 rounded-2xl text-rose-300">
+                        <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Could not generate report interpretation. Please check connection.
+                    </div>
+                `;
+                contentBox.classList.remove('hidden');
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+
+        // --- STREAMING_CHUNK: Building the Gemini API structured JSON recipe generator... ---
+        // Dynamic Recipe Planner
+        async function generateRecipePlan() {
+            const focus = document.getElementById('recipeFocus').value;
+            const extraIngredients = document.getElementById('recipeIngredients').value.trim();
+
+            const placeholder = document.getElementById('recipePlaceholder');
+            const loader = document.getElementById('recipeLoader');
+            const contentBox = document.getElementById('recipeContent');
+
+            placeholder.classList.add('hidden');
+            contentBox.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            const promptText = `Formulate a detailed, premium meal recipe centered on promoting fertility through this target nutrient: "${focus}". ${extraIngredients ? `Try to incorporate these preferred ingredients: ${extraIngredients}.` : ''} Output the result strictly in JSON schema.`;
+
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: promptText }] }],
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            recipeName: { type: "STRING" },
+                            prepTime: { type: "STRING" },
+                            keyNutrients: { type: "ARRAY", items: { type: "STRING" } },
+                            ingredients: { type: "ARRAY", items: { type: "STRING" } },
+                            instructions: { type: "ARRAY", items: { type: "STRING" } }
+                        },
+                        required: ["recipeName", "prepTime", "keyNutrients", "ingredients", "instructions"]
+                    }
+                }
+            };
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates[0].content?.parts?.[0]?.text) {
+                    const jsonText = result.candidates[0].content.parts[0].text;
+                    const data = JSON.parse(jsonText);
+
+                    // Render gorgeous structured card layout
+                    contentBox.innerHTML = `
+                        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+                            <div class="flex justify-between items-start">
+                                <h4 class="text-xl font-bold text-neon-yellow">${data.recipeName}</h4>
+                                <span class="bg-amber-900/40 text-neon-yellow border border-amber-500/30 text-xs px-2.5 py-1 rounded-full font-bold">
+                                    <i class="fa-regular fa-clock mr-1"></i> ${data.prepTime}
+                                </span>
+                            </div>
+
+                            <div>
+                                <span class="text-xs uppercase font-bold text-slate-400 block mb-2 tracking-widest">Key Bio-Active Nutrients</span>
+                                <div class="flex flex-wrap gap-2">
+                                    ${data.keyNutrients.map(nut => `<span class="bg-slate-800 border border-slate-700 px-2.5 py-0.5 rounded text-xs text-slate-200">${nut}</span>`).join('')}
+                                </div>
+                            </div>
+
+                            <div>
+                                <span class="text-xs uppercase font-bold text-slate-400 block mb-2 tracking-widest">Ingredients</span>
+                                <ul class="list-disc pl-5 text-sm text-slate-300 space-y-1 font-body">
+                                    ${data.ingredients.map(ing => `<li>${ing}</li>`).join('')}
+                                </ul>
+                            </div>
+
+                            <div>
+                                <span class="text-xs uppercase font-bold text-slate-400 block mb-2 tracking-widest">Preparation Steps</span>
+                                <ol class="list-decimal pl-5 text-sm text-slate-300 space-y-2 font-body">
+                                    ${data.instructions.map(step => `<li>${step}</li>`).join('')}</ol>
+                            </div>
+                        </div>
+                    `;
+                    contentBox.classList.remove('hidden');
+                } else {
+                    throw new Error("Empty structured schema generated.");
+                }
+            } catch (error) {
+                console.error(error);
+                contentBox.innerHTML = `
+                    <div class="bg-rose-950/20 border border-rose-500/30 p-4 rounded-2xl text-rose-300 text-sm">
+                        <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Synthesis failed. Please check parameters and try again.
+                    </div>
+                `;
+                contentBox.classList.remove('hidden');
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
